@@ -1,0 +1,181 @@
+// ---------------------------------------------------------------------------
+// Marketplace dataset: (a) agri-input listings (seeds, fertiliser, crop
+// protection, tools) and (b) mandi commodity prices.
+// Plug-in point: set MARKETPLACE_API_BASE + MARKETPLACE_API_KEY in .env to
+// proxy a live source (AgMarkNet / eNAM / your own catalog). Otherwise this
+// mock catalogue is served with source:"mock".
+// ---------------------------------------------------------------------------
+
+export const INPUT_LISTINGS = [
+  {
+    id: 'sku-seed-ragi-01',
+    title: 'Ragi Seed - ML-365 (Certified)',
+    category: 'Seeds',
+    crop: 'ragi',
+    price: 480,
+    unit: '5 kg bag',
+    seller: 'Karnataka Seeds Corp',
+    location: 'Bengaluru Rural, KA',
+    rating: 4.6,
+    reviews: 212,
+    stock: 340,
+    verified: true,
+    tags: ['Kharif', 'Drought-tolerant'],
+    local: { kn: 'ರಾಗಿ ಬೀಜ - ಎಂಎಲ್-365' }
+  },
+  {
+    id: 'sku-seed-maize-02',
+    title: 'Hybrid Maize Seed - NK-6240',
+    category: 'Seeds',
+    crop: 'maize',
+    price: 1250,
+    unit: '4 kg bag',
+    seller: 'Syngenta Agri Store',
+    location: 'Dharwad, KA',
+    rating: 4.4,
+    reviews: 168,
+    stock: 120,
+    verified: true,
+    tags: ['High yield', 'FAW tolerant'],
+    local: { kn: 'ಹೈಬ್ರಿಡ್ ಮೆಕ್ಕೆಜೋಳ ಬೀಜ - NK-6240' }
+  },
+  {
+    id: 'sku-fert-dap-03',
+    title: 'DAP 18-46-0 Fertiliser',
+    category: 'Fertiliser',
+    crop: null,
+    price: 1350,
+    unit: '50 kg bag',
+    seller: 'IFFCO Dealer - Mysuru',
+    location: 'Mysuru, KA',
+    rating: 4.7,
+    reviews: 540,
+    stock: 800,
+    verified: true,
+    tags: ['Basal dose', 'Phosphorus'],
+    local: { kn: 'ಡಿಎಪಿ ರಸಗೊಬ್ಬರ 18-46-0' }
+  },
+  {
+    id: 'sku-fert-urea-04',
+    title: 'Urea 46% N',
+    category: 'Fertiliser',
+    crop: null,
+    price: 266,
+    unit: '45 kg bag',
+    seller: 'IFFCO Dealer - Mandya',
+    location: 'Mandya, KA',
+    rating: 4.5,
+    reviews: 390,
+    stock: 1200,
+    verified: true,
+    tags: ['Top dressing', 'Nitrogen'],
+    local: { kn: 'ಯೂರಿಯಾ 46% ಸಾರಜನಕ' }
+  },
+  {
+    id: 'sku-chem-imida-05',
+    title: 'Imidacloprid 17.8% SL',
+    category: 'Crop Protection',
+    crop: null,
+    price: 320,
+    unit: '250 ml',
+    seller: 'AgroChem Solutions',
+    location: 'Belagavi, KA',
+    rating: 4.1,
+    reviews: 88,
+    stock: 260,
+    verified: true,
+    tags: ['Insecticide', 'Systemic'],
+    local: { kn: 'ಇಮಿಡಾಕ್ಲೋಪ್ರಿಡ್ 17.8% SL' }
+  },
+  {
+    id: 'sku-bio-beau-06',
+    title: 'Beauveria bassiana Bio-insecticide',
+    category: 'Crop Protection',
+    crop: null,
+    price: 540,
+    unit: '1 kg',
+    seller: 'BioAgri Naturals',
+    location: 'Shivamogga, KA',
+    rating: 4.5,
+    reviews: 64,
+    stock: 180,
+    verified: true,
+    tags: ['Organic', 'IPM', 'Bio'],
+    local: { kn: 'ಬ್ಯೂವೇರಿಯಾ ಜೈವಿಕ ಕೀಟನಾಶಕ' }
+  },
+  {
+    id: 'sku-tool-drip-07',
+    title: 'Drip Irrigation Kit - 1 Acre',
+    category: 'Tools',
+    crop: null,
+    price: 18500,
+    unit: 'per acre kit',
+    seller: 'Jain Irrigation',
+    location: 'Pune, MH',
+    rating: 4.6,
+    reviews: 145,
+    stock: 42,
+    verified: true,
+    tags: ['Water saving', 'Subsidy eligible'],
+    local: { kn: 'ಹನಿ ನೀರಾವರಿ ಕಿಟ್ - 1 ಎಕರೆ' }
+  },
+  {
+    id: 'sku-tool-soilsensor-08',
+    title: 'Soil Moisture + NPK Sensor (IoT)',
+    category: 'Tools',
+    crop: null,
+    price: 4200,
+    unit: 'per node',
+    seller: 'AgriSense Hardware',
+    location: 'Bengaluru, KA',
+    rating: 4.3,
+    reviews: 37,
+    stock: 95,
+    verified: true,
+    tags: ['IoT', 'Real-time', 'LoRa'],
+    local: { kn: 'ಮಣ್ಣಿನ ತೇವಾಂಶ + NPK ಸೆನ್ಸರ್' }
+  },
+  {
+    id: 'sku-seed-coffee-09',
+    title: 'Arabica Coffee Seedling',
+    category: 'Seeds',
+    crop: 'coffee',
+    price: 45,
+    unit: 'per seedling',
+    seller: 'Coorg Plantations',
+    location: 'Kodagu, KA',
+    rating: 4.8,
+    reviews: 96,
+    stock: 5000,
+    verified: true,
+    tags: ['Perennial', 'Shade-grown'],
+    local: { kn: 'ಅರೇಬಿಕಾ ಕಾಫಿ ಸಸಿ' }
+  },
+  {
+    id: 'sku-fert-vermi-10',
+    title: 'Vermicompost (Organic)',
+    category: 'Fertiliser',
+    crop: null,
+    price: 400,
+    unit: '50 kg bag',
+    seller: 'GreenSoil Organics',
+    location: 'Hassan, KA',
+    rating: 4.6,
+    reviews: 128,
+    stock: 600,
+    verified: true,
+    tags: ['Organic', 'Soil health'],
+    local: { kn: 'ಎರೆಹುಳು ಗೊಬ್ಬರ (ಸಾವಯವ)' }
+  }
+];
+
+export const MANDI_PRICES = [
+  { crop: 'Ragi', local: { kn: 'ರಾಗಿ' }, market: 'Bengaluru (Yeshwanthpur)', modal: 3620, min: 3200, max: 4100, unit: '₹/quintal', trend: '+2.1%', updated: '2026-10-24' },
+  { crop: 'Maize', local: { kn: 'ಮೆಕ್ಕೆಜೋಳ' }, market: 'Davangere', modal: 2210, min: 1950, max: 2400, unit: '₹/quintal', trend: '-0.8%', updated: '2026-10-24' },
+  { crop: 'Cotton', local: { kn: 'ಹತ್ತಿ' }, market: 'Hubballi', modal: 7350, min: 6900, max: 7800, unit: '₹/quintal', trend: '+1.4%', updated: '2026-10-24' },
+  { crop: 'Onion', local: { kn: 'ಈರುಳ್ಳಿ' }, market: 'Hubballi (APMC)', modal: 2450, min: 1800, max: 3100, unit: '₹/quintal', trend: '+6.2%', updated: '2026-10-24' },
+  { crop: 'Tomato', local: { kn: 'ಟೊಮೆಟೊ' }, market: 'Kolar', modal: 1580, min: 900, max: 2600, unit: '₹/quintal', trend: '-4.5%', updated: '2026-10-24' },
+  { crop: 'Groundnut', local: { kn: 'ಶೇಂಗಾ' }, market: 'Raichur', modal: 6180, min: 5600, max: 6650, unit: '₹/quintal', trend: '+0.9%', updated: '2026-10-24' },
+  { crop: 'Coffee (Arabica)', local: { kn: 'ಕಾಫಿ' }, market: 'Kushalnagar', modal: 12800, min: 11800, max: 13900, unit: '₹/quintal', trend: '+3.7%', updated: '2026-10-24' },
+  { crop: 'Paddy', local: { kn: 'ಭತ್ತ' }, market: 'Gangavathi', modal: 2320, min: 2100, max: 2500, unit: '₹/quintal', trend: '+0.4%', updated: '2026-10-24' }
+];
