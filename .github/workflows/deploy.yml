@@ -65,10 +65,19 @@ jobs:
     name: Trigger host redeploy (optional)
     needs: build-and-push
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'push' && secrets.RENDER_DEPLOY_HOOK != '' }}
+    # NOTE: the `secrets` context is NOT allowed in a job-level `if:` — GitHub
+    # rejects the whole workflow if you use it. Pass the secret via `env` on the
+    # step and test it in the shell instead.
+    if: github.event_name == 'push'
     steps:
-      - name: Ping Render deploy hook
+      - name: Ping Render deploy hook (skipped when not configured)
+        env:
+          RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
         run: |
+          if [ -z "$RENDER_DEPLOY_HOOK" ]; then
+            echo "RENDER_DEPLOY_HOOK secret not set - skipping host redeploy."
+            exit 0
+          fi
           echo "Triggering Render redeploy…"
-          curl -fsSL -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
+          curl -fsSL -X POST "$RENDER_DEPLOY_HOOK"
           echo "Done."
