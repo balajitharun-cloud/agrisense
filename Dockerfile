@@ -8,6 +8,10 @@ WORKDIR /app/frontend
 COPY frontend/package*.json ./
 RUN npm ci
 COPY frontend/ ./
+# src/lib/staticApi.js imports the backend's pure data/service modules (used by
+# the GitHub Pages static build). They must exist at /app/backend/src for
+# Rollup to resolve them, even though this image runs the real API.
+COPY backend/src /app/backend/src
 RUN npm run build
 
 FROM node:20-alpine AS runtime
