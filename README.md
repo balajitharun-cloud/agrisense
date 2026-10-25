@@ -174,3 +174,53 @@ agrisense/
 Pesticide guidance is **decision-support only**. Dosages, pre-harvest intervals
 and toxicity classes must be verified against the current CIB&RC label and a
 licensed agronomist before any use. The app shows this disclaimer in the UI.
+
+---
+
+## 9. Deployment
+
+### Container (single service, one port)
+
+The `Dockerfile` builds the frontend, then runs the Express backend serving
+that build — one image, port `8787`.
+
+```bash
+docker build -t agrisense .
+docker run -p 8787:8787 \
+  -e ELEVENLABS_API_KEY=sk_... \
+  agrisense
+# open http://localhost:8787
+```
+
+### GitHub Actions
+
+Two workflows ship in `.github/workflows/`:
+
+| Workflow | Trigger | What it does |
+|----------|---------|--------------|
+| `ci.yml` | push / PR to `main` | Installs backend, runs the **27-check endpoint smoke test**; installs frontend and builds it; uploads `dist` as an artifact |
+| `deploy.yml` | push to `main` (backend/frontend/Dockerfile paths) or manual | Builds the image and publishes it to **GitHub Container Registry** as `ghcr.io/<owner>/agrisense:latest` and `:sha-<short>` |
+
+To pull and run the published image on any container host:
+
+```bash
+echo $GHCR_TOKEN | docker login ghcr.io -u <username> --password-stdin
+docker run -p 8787:8787 ghcr.io/balajitharun-cloud/agrisense:latest
+```
+
+**Automatic redeploy on a host:** create a Render "Deploy Hook" for a Web
+Service, then add it as a repository secret named `RENDER_DEPLOY_HOOK`. The
+`deploy.yml` workflow pings it after each successful image push. Any other host
+(Fly.io, Railway, a VPS) can simply pull the same image.
+
+> **GitHub Pages will not work for this app.** Pages serves static files only,
+> and AgriSense needs the Express backend for sensors, weather, the voice proxy
+> and accounts. Hosting the frontend on Pages alone gives you a UI with no
+> working API.
+
+### Local checks
+
+```bash
+cd backend  && npm run smoke         # 27 API route checks
+cd frontend && npm run check:render  # server-renders all 9 routes, catches runtime errors
+```

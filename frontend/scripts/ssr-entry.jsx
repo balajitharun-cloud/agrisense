@@ -1,7 +1,7 @@
 import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
-import App from './src/App.jsx';
-import { AppProvider } from './src/context/AppContext.jsx';
+import App from '../src/App.jsx';
+import { AppProvider } from '../src/context/AppContext.jsx';
 
 const routes = ['/', '/sensors', '/weather', '/satellite', '/crops', '/protection', '/marketplace', '/gov', '/account'];
 let failed = 0;
