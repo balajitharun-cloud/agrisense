@@ -3,7 +3,11 @@ import react from '@vitejs/plugin-react';
 
 // Dev server proxies /api to the Express backend so the frontend can call
 // relative URLs in both dev and production.
+//
+// VITE_BASE is set to '/agrisense/' by the GitHub Pages workflow so assets
+// resolve under the project subpath. Everything else keeps '/'.
 export default defineConfig({
+  base: process.env.VITE_BASE || '/',
   plugins: [react()],
   server: {
     port: 5173,

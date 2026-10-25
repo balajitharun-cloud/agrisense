@@ -284,3 +284,55 @@ projects from the same repo:
 
 Then point the frontend at the backend's URL via a `VITE_API_BASE` environment
 variable. The single-project setup above is the one wired up by default.
+
+---
+
+## 11. GitHub Pages (static demo)
+
+**Live site:** https://balajitharun-cloud.github.io/agrisense/
+
+GitHub Pages serves static files only, so this deployment is a **self-contained
+static build** — there is no Express server behind it. Rather than a hollow shell,
+the browser runs the real logic: `frontend/src/lib/staticApi.js` imports the
+backend's own data and pure service modules (`data/regions.js`,
+`services/sensors.js`, `services/satellite.js`, `services/translate.js`,
+`services/weatherCore.js`) directly into the bundle.
+
+### What works on Pages
+
+| Feature | On Pages |
+|---------|----------|
+| Dashboard, sensors (temp/humidity/soil/NPK) | Works — same diurnal model |
+| Weather + 7-day outlook | **Live** — Open-Meteo is CORS-enabled, called from the browser |
+| Soil & satellite (NDVI, pH, salinity) | Works — same seeded model |
+| Crop advisor, plant protection, marketplace, gov | Works — same data and scoring |
+| Multilingual, light/dark | Works |
+| Voice | Browser Web Speech (no ElevenLabs proxy) |
+| Accounts | Browser-local (localStorage, SHA-256 hashed) — demo only |
+
+### What differs from the server build
+
+- **No ElevenLabs voice** — the proxy needs a server. Set `ELEVENLABS_API_KEY`
+  and use the Docker/Vercel deployment for that.
+- **Accounts are per-browser**, not shared. Clearing site data resets them.
+- Anything requiring a server-side secret is unavailable by design.
+
+### How the deploy works
+
+`.github/workflows/pages.yml` builds with `VITE_STATIC_API=true` and
+`VITE_BASE=/agrisense/`, copies `index.html` to `404.html` so deep links like
+`/agrisense/sensors` resolve to the SPA, then publishes via
+`actions/deploy-pages`. Pushes touching `frontend/`, the backend data/services,
+or the workflow redeploy automatically.
+
+To build the same thing locally:
+
+```bash
+cd frontend
+VITE_STATIC_API=true VITE_BASE=/agrisense/ npm run build
+npx serve dist        # or any static server
+```
+
+> Note: because Pages is static, the `backend/` folder is not used by this
+> deployment. The Docker, Vercel and plain-Node paths remain the way to run the
+> real API.
