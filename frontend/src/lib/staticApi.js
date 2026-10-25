@@ -17,6 +17,7 @@
 // ---------------------------------------------------------------------------
 
 import { getRegion, getDistrict, recommendCrops, REGIONS } from '../../../backend/src/data/regions.js';
+import { DIVISIONS, getDivision, localizeDivision } from '../../../backend/src/data/divisions.js';
 import { PESTS, PESTICIDES, pesticidesFor, pestById } from '../../../backend/src/data/pesticides.js';
 import { INPUT_LISTINGS, MANDI_PRICES } from '../../../backend/src/data/marketplace.js';
 import { GOV_ANNOUNCEMENTS } from '../../../backend/src/data/gov.js';
@@ -72,6 +73,30 @@ async function crops({ regionId = 'ka', districtId, season = 'Kharif', water = '
     source: 'catalog',
     ...result,
     recommendations: result.recommendations.map((r) => ({
+      ...r,
+      name: r.local?.[lang] || r.name,
+      reasons: translateLines(r.reasons, lang)
+    }))
+  };
+}
+
+/* ------------------------------- divisions ------------------------------ */
+async function divisions(lang = 'en') {
+  return { source: 'catalog', divisions: DIVISIONS.map((d) => localizeDivision(d, lang)) };
+}
+
+async function division(divisionId, { season = 'Kharif', water = 'Medium', lang = 'en' } = {}) {
+  await wait();
+  const div = getDivision(divisionId);
+  if (!div) throw new Error('Unknown division');
+  const result = recommendCrops('ka', div.representativeDistrictId, season, water);
+  return {
+    source: 'catalog',
+    division: localizeDivision(div, lang),
+    season,
+    waterAvailability: water,
+    district: result.district,
+    recommendations: result.recommendations.slice(0, 6).map((r) => ({
       ...r,
       name: r.local?.[lang] || r.name,
       reasons: translateLines(r.reasons, lang)
@@ -330,7 +355,7 @@ if (typeof localStorage !== 'undefined' && !readUsers().length) {
 }
 
 export const api = {
-  meta, regions, crops, pests, pesticides,
+  meta, regions, crops, divisions, division, pests, pesticides,
   nodes, node, history,
   weather, soil,
   listings, prices, gov,

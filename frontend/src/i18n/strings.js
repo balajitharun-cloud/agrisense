@@ -138,7 +138,22 @@ const en = {
   'account.preferences': 'Preferences',
   'account.guest': 'Sign in to save your farms and preferences.',
   'voice.readAloud': 'Read aloud',
-  'voice.playing': 'Playing…'
+  'voice.playing': 'Playing…',
+  'nav.map': 'Crop Map',
+  'map.title': 'Karnataka crop map',
+  'map.subtitle': 'Karnataka is divided into four revenue divisions. Pick one to see the crops that dominate it and what suits your land.',
+  'map.dominantCrops': 'Dominant crops',
+  'map.recommendations': 'Recommended for this division',
+  'map.divisions': 'Divisions',
+  'map.selectHint': 'Click a district or a division on the map.',
+  'map.openAdvisor': 'Open in crop advisor',
+  'map.districts': 'Districts',
+  'map.shareText': 'Crop recommendation from AgriSense',
+  'share.action': 'Share',
+  'share.title': 'Share this view',
+  'share.copied': 'Link copied to clipboard',
+  'share.copiedShort': 'Copied',
+  'share.failed': 'Could not copy the link'
 };
 
 const hi = {
@@ -259,7 +274,22 @@ const hi = {
   'account.preferences': 'प्राथमिकताएँ',
   'account.guest': 'खेत और प्राथमिकताएँ सहेजने के लिए साइन इन करें।',
   'voice.readAloud': 'पढ़कर सुनाएँ',
-  'voice.playing': 'चल रहा है…'
+  'voice.playing': 'चल रहा है…',
+  'nav.map': 'फ़सल नक्शा',
+  'map.title': 'कर्नाटक फ़सल नक्शा',
+  'map.subtitle': 'कर्नाटक चार राजस्व मंडलों में बँटा है। एक चुनें और वहाँ की प्रमुख फ़सलें देखें।',
+  'map.dominantCrops': 'प्रमुख फ़सलें',
+  'map.recommendations': 'इस मंडल के लिए सुझाव',
+  'map.divisions': 'मंडल',
+  'map.selectHint': 'नक्शे पर ज़िला या मंडल पर क्लिक करें।',
+  'map.openAdvisor': 'फ़सल सलाहकार में खोलें',
+  'map.districts': 'ज़िले',
+  'map.shareText': 'AgriSense फ़सल सुझाव',
+  'share.action': 'साझा करें',
+  'share.title': 'यह दृश्य साझा करें',
+  'share.copied': 'लिंक क्लिपबोर्ड पर कॉपी हो गया',
+  'share.copiedShort': 'कॉपी हुआ',
+  'share.failed': 'लिंक कॉपी नहीं हो सका'
 };
 
 const kn = {
@@ -380,7 +410,22 @@ const kn = {
   'account.preferences': 'ಆದ್ಯತೆಗಳು',
   'account.guest': 'ಜಮೀನು ಮತ್ತು ಆದ್ಯತೆ ಉಳಿಸಲು ಸೈನ್ ಇನ್ ಮಾಡಿ.',
   'voice.readAloud': 'ಓದಿ ಕೇಳಿಸಿ',
-  'voice.playing': 'ಪ್ಲೇ ಆಗುತ್ತಿದೆ…'
+  'voice.playing': 'ಪ್ಲೇ ಆಗುತ್ತಿದೆ…',
+  'nav.map': 'ಬೆಳೆ ನಕ್ಷೆ',
+  'map.title': 'ಕರ್ನಾಟಕ ಬೆಳೆ ನಕ್ಷೆ',
+  'map.subtitle': 'ಕರ್ನಾಟಕವನ್ನು ನಾಲ್ಕು ಆದಾಯ ವಿಭಾಗಗಳಾಗಿ ವಿಂಗಡಿಸಲಾಗಿದೆ. ಆಯ್ಕೆ ಮಾಡಿ ಆ ಭಾಗದ ಪ್ರಮುಖ ಬೆಳೆಗಳನ್ನು ನೋಡಿ.',
+  'map.dominantCrops': 'ಪ್ರಮುಖ ಬೆಳೆಗಳು',
+  'map.recommendations': 'ಈ ವಿಭಾಗಕ್ಕೆ ಶಿಫಾರಸು',
+  'map.divisions': 'ವಿಭಾಗಗಳು',
+  'map.selectHint': 'ನಕ್ಷೆಯಲ್ಲಿ ಜಿಲ್ಲೆ ಅಥವಾ ವಿಭಾಗವನ್ನು ಕ್ಲಿಕ್ ಮಾಡಿ.',
+  'map.openAdvisor': 'ಬೆಳೆ ಸಲಹೆಗಾರದಲ್ಲಿ ತೆರೆಯಿರಿ',
+  'map.districts': 'ಜಿಲ್ಲೆಗಳು',
+  'map.shareText': 'AgriSense ಬೆಳೆ ಶಿಫಾರಸು',
+  'share.action': 'ಹಂಚಿಕೊಳ್ಳಿ',
+  'share.title': 'ಈ ನೋಟವನ್ನು ಹಂಚಿಕೊಳ್ಳಿ',
+  'share.copied': 'ಲಿಂಕ್ ಕ್ಲಿಪ್‌ಬೋರ್ಡ್‌ಗೆ ನಕಲಿಸಲಾಗಿದೆ',
+  'share.copiedShort': 'ನಕಲಿಸಲಾಗಿದೆ',
+  'share.failed': 'ಲಿಂಕ್ ನಕಲಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ'
 };
 
 const ta = {

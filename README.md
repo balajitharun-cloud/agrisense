@@ -336,3 +336,62 @@ npx serve dist        # or any static server
 > Note: because Pages is static, the `backend/` folder is not used by this
 > deployment. The Docker, Vercel and plain-Node paths remain the way to run the
 > real API.
+
+---
+
+## 12. Crop map (Karnataka divisions) and sharing
+
+**Route:** `/map` (sidebar → Advise → Crop Map)
+
+An interactive map of Karnataka split into its **four revenue divisions** —
+Bengaluru, Mysuru, Belagavi and Kalaburagi. Click a district or a division and
+the panel shows that division's climate, its dominant crops with indicative
+area shares, and a ranked crop recommendation for the division's representative
+district.
+
+### How it is built
+
+| Piece | File |
+|-------|------|
+| Division data + dominant crops | `backend/src/data/divisions.js` |
+| API | `GET /api/divisions`, `GET /api/divisions/:id?season=&water=&lang=` |
+| Map geometry (generated) | `frontend/src/data/karnatakaMap.js` |
+| Page | `frontend/src/pages/MapView.jsx` |
+
+Geometry comes from the **datameet Census-2011 district shapefile** (30
+Karnataka districts, WGS84), projected to SVG and simplified with
+Ramer-Douglas-Peucker by `scripts/build-karnataka-map.py`. The output is a
+~88 KB JS module, so there is no mapping library and no runtime fetch.
+
+```bash
+mkdir -p /tmp/dist2011 && for e in shp dbf shx prj; do \
+  curl -o /tmp/dist2011/2011_Dist.$e \
+  https://raw.githubusercontent.com/datameet/maps/master/Districts/Census_2011/2011_Dist.$e; done
+pip install pyshp
+python3 scripts/build-karnataka-map.py /tmp/dist2011/2011_Dist.shp
+```
+
+I originally used the older geohacker geojson and it left a visible hole where
+Yadgir should be (that dataset predates the 2007 district split). Census 2011
+has all 30 districts, so the divisions tile the state with no gaps — verified by
+rendering over a contrasting background.
+
+### Sharing
+
+`ShareButton` (`frontend/src/components/ShareButton.jsx`) uses the native share
+sheet where available and falls back to copying the link. The URL carries the
+selection so a shared link reopens the same view:
+
+- `/map?division=mysuru&season=Kharif`
+- `/crops?regionId=ka&districtId=ka-mysuru&season=Rabi&water=Medium`
+
+Links are built from Vite's `BASE_URL`, so they work both at a domain root and
+under `/agrisense/` on GitHub Pages.
+
+### Caveats
+
+- `dominantCrops[].share` is an **indicative** relative share for the UI's
+  proportion bars, not an official statistical series. Replace with Department
+  of Agriculture figures for audited numbers.
+- Division boundaries are drawn from district geometry, so they follow
+  district outlines rather than the exact revenue-division boundary lines.

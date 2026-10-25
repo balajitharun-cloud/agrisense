@@ -5,6 +5,7 @@
 
 import { Router } from 'express';
 import { REGIONS, getRegion, getDistrict, recommendCrops } from '../data/regions.js';
+import { DIVISIONS, getDivision, localizeDivision } from '../data/divisions.js';
 import { PESTS, PESTICIDES, pesticidesFor, pestById } from '../data/pesticides.js';
 import { INPUT_LISTINGS, MANDI_PRICES } from '../data/marketplace.js';
 import { GOV_ANNOUNCEMENTS } from '../data/gov.js';
@@ -55,6 +56,41 @@ router.get('/crops/recommend', (req, res) => {
     reasons: translateLines(r.reasons, l)
   }));
   res.json({ source: 'catalog', ...result, recommendations });
+});
+
+/* ------------------------------- divisions ------------------------------- */
+// Karnataka's four revenue divisions, with the crops that dominate each one.
+router.get('/divisions', (req, res) => {
+  const l = lang(req);
+  res.json({
+    source: 'catalog',
+    divisions: DIVISIONS.map((d) => localizeDivision(d, l))
+  });
+});
+
+// A division's dominant crops plus a ranked recommendation for its
+// representative district, reusing the same scoring as /crops/recommend.
+router.get('/divisions/:divisionId', (req, res) => {
+  const division = getDivision(req.params.divisionId);
+  if (!division) return res.status(404).json({ error: 'Unknown division' });
+
+  const l = lang(req);
+  const { season = 'Kharif', water = 'Medium' } = req.query;
+  const districtId = division.representativeDistrictId;
+  const result = recommendCrops('ka', districtId, season, water);
+
+  res.json({
+    source: 'catalog',
+    division: localizeDivision(division, l),
+    season,
+    waterAvailability: water,
+    district: result.district,
+    recommendations: result.recommendations.slice(0, 6).map((r) => ({
+      ...r,
+      name: r.local?.[l] || r.name,
+      reasons: translateLines(r.reasons, l)
+    }))
+  });
 });
 
 /* ------------------------------- pesticides ------------------------------ */

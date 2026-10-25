@@ -1,16 +1,34 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { Sprout, CalendarClock, Droplets, TrendingUp, Check } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
 import { api } from '../lib/api.js';
 import { useAsync } from '../lib/hooks.js';
 import { Card, SectionHead, Spinner, ErrorState, Badge, Meter, Field, SourceBadge } from '../components/ui.jsx';
 import VoiceButton from '../components/VoiceButton.jsx';
+import ShareButton, { buildShareUrl } from '../components/ShareButton.jsx';
 
 const SEASONS = ['Kharif', 'Rabi', 'Summer', 'Annual', 'Perennial'];
 const WATER = ['Low', 'Medium', 'High'];
 
 export default function Crops() {
-  const { t, lang, regionId, districtId, season, setSeason, water, setWater } = useApp();
+  const { t, lang, regionId, districtId, season, setSeason, water, setWater, changeRegion, setDistrictId, regions } = useApp();
+  const [params] = useSearchParams();
+
+  // A shared link carries the full selection, so restore it on load.
+  useEffect(() => {
+    const p = new URLSearchParams(params);
+    const s = p.get('season');
+    const w = p.get('water');
+    const r = p.get('regionId');
+    const d = p.get('districtId');
+    if (r) changeRegion(r, regions);
+    if (d) setDistrictId(d);
+    if (s && SEASONS.includes(s)) setSeason(s);
+    if (w && WATER.includes(w)) setWater(w);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const { data, loading, error, reload } = useAsync(
     () => api.crops({ regionId, districtId, season, water, lang }),
     [regionId, districtId, season, water, lang]
@@ -28,7 +46,17 @@ export default function Crops() {
         eyebrow={data ? `${data.region.state} · ${data.district.name}` : t('nav.group.advise')}
         title={t('crops.title')}
         sub={t('crops.subtitle')}
-        right={<VoiceButton text={speech} />}
+        right={
+          <div className="row" style={{ gap: 8 }}>
+            <ShareButton
+              title={t('crops.title')}
+              text={`${t('map.shareText')} - ${data?.district?.name || ''}`}
+              url={() => buildShareUrl('/crops', { regionId, districtId, season, water })}
+              label={t('share.action')}
+            />
+            <VoiceButton text={speech} />
+          </div>
+        }
       />
 
       <Card style={{ marginBottom: 'var(--sp-4)' }}>

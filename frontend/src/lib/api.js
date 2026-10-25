@@ -35,6 +35,8 @@ const liveApi = {
   meta: () => request('/meta'),
   regions: () => request('/regions'),
   crops: (q) => request(`/crops/recommend?${new URLSearchParams(q)}`),
+  divisions: (lang) => request(`/divisions?lang=${lang}`),
+  division: (id, q) => request(`/divisions/${id}?${new URLSearchParams({ ...q })}`),
   pests: (lang) => request(`/pests?lang=${lang}`),
   pesticides: (q) => request(`/pesticides?${new URLSearchParams(q)}`),
   nodes: () => request('/sensors/nodes'),

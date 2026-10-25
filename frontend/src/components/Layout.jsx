@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, Thermometer, CloudSun, Satellite, Sprout, ShieldAlert,
-  Store, Megaphone, UserRound, Sun, Moon, Menu, X, Languages, MapPin, Sprout as SproutIcon
+  Store, Megaphone, UserRound, Sun, Moon, Menu, X, Languages, MapPin, Map as MapIcon, Sprout as SproutIcon
 } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
 import { LANGUAGES } from '../i18n/strings.js';
@@ -16,6 +16,7 @@ const NAV = [
     { to: '/satellite', icon: Satellite, key: 'nav.satellite' }
   ] },
   { group: 'nav.group.advise', items: [
+    { to: '/map', icon: MapIcon, key: 'nav.map' },
     { to: '/crops', icon: Sprout, key: 'nav.crops' },
     { to: '/protection', icon: ShieldAlert, key: 'nav.protection' }
   ] },
@@ -28,7 +29,7 @@ const NAV = [
 
 const TITLES = {
   '/': 'dash.title', '/sensors': 'sensors.title', '/weather': 'weather.title',
-  '/satellite': 'sat.title', '/crops': 'crops.title', '/protection': 'prot.title',
+  '/satellite': 'sat.title', '/crops': 'crops.title', '/map': 'map.title', '/protection': 'prot.title',
   '/marketplace': 'market.title', '/gov': 'gov.title', '/account': 'account.title'
 };
 

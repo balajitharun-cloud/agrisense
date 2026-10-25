@@ -384,3 +384,17 @@ button { font-family: inherit; cursor: pointer; }
 .auth-main { display: grid; place-items: center; padding: var(--sp-6); }
 .auth-card { width: min(420px, 100%); }
 @media (max-width: 900px) { .auth-wrap { grid-template-columns: 1fr; } .auth-aside { display: none; } }
+
+/* ============================ crop map ================================== */
+.map-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: var(--sp-4);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .map-layout { grid-template-columns: 1fr; }
+}
+.ka-district { transition: fill-opacity 0.18s ease; cursor: pointer; }
+.ka-district:focus-visible { outline: none; stroke: var(--accent); stroke-width: 2.2; }
+.ka-label { pointer-events: none; font-family: var(--font-mono); font-size: 13px; font-weight: 700; fill: #fff; letter-spacing: 0.04em; }
