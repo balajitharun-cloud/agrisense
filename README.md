@@ -224,3 +224,63 @@ Service, then add it as a repository secret named `RENDER_DEPLOY_HOOK`. The
 cd backend  && npm run smoke         # 27 API route checks
 cd frontend && npm run check:render  # server-renders all 9 routes, catches runtime errors
 ```
+
+---
+
+## 10. Deploying to Vercel
+
+### Import the repo
+
+1. Go to **vercel.com/new** and import `balajitharun-cloud/agrisense`.
+2. Leave Framework Preset / Build / Output on their defaults — `vercel.json` pins
+   everything (`vite`, `frontend/dist`, the API function).
+3. Add environment variables (Project → Settings → Environment Variables) if you
+   want live integrations: `ELEVENLABS_API_KEY`, `ELEVENLABS_VOICE_ID`, etc.
+   Weather works with no keys at all.
+4. Deploy. Every push to `main` then redeploys automatically.
+
+### How it is wired
+
+Vercel is serverless, so the Express server cannot run as a long-lived process.
+The repo is set up for it:
+
+| Piece | File | Notes |
+|-------|------|-------|
+| API function | `api/index.js` | Vercel turns this into one Node function; it re-exports the same Express app the normal server uses |
+| Shared app | `backend/src/api.js` | `createApiApp({ serveFrontend })` — one definition, two hosts |
+| Routing | `vercel.json` | `/api/*` and `/health` → the function; everything else → `/index.html` (SPA deep links) |
+| Frontend | `frontend/dist` | Built by `buildCommand`, served from Vercel's CDN |
+
+Because a rewrite can present the path with or without the `/api` prefix, the
+function mounts the router at **both** `/api` and `/`, so routing works either
+way. Verified locally: `/api/meta`, `/meta`, `/api/regions`, `/regions`, a real
+`POST /api/auth/register`, and a 404 that leaves the function healthy.
+
+Note that Vercel **ignores `express.static()`** by design — that is why the
+function sets `serveFrontend: false` and the SPA is served from the CDN instead.
+
+### Serverless limitations — read this
+
+- **Accounts are not durable.** `backend/src/services/account.js` keeps users in
+  memory, and on Vercel each function instance has its own memory. Registration
+  and login will appear to work inside a warm instance but will not persist
+  reliably. Swap the `Map` for a real database (Postgres, Upstash Redis, Mongo)
+  before using accounts in production. Everything else — sensors, weather,
+  satellite, crops, pesticides, marketplace, gov — is stateless and fine.
+- **Cold starts.** The first request after idle takes a moment; the
+  `maxDuration: 30` in `vercel.json` is generous for these endpoints.
+- **Voice** falls back to the browser's Web Speech engine unless
+  `ELEVENLABS_API_KEY` is set in the Vercel dashboard.
+
+### Alternative: two projects
+
+For a cleaner production split (and better isolation), create two Vercel
+projects from the same repo:
+
+- **Frontend** — Root Directory `frontend`, framework Vite, plus a rewrite of
+  `/(.*)` → `/index.html` for SPA deep links.
+- **Backend** — Root Directory `backend`. Vercel auto-detects Express from
+  `backend/src/app.js` and runs it as a function, no rewrites needed.
+
+Then point the frontend at the backend's URL via a `VITE_API_BASE` environment
+variable. The single-project setup above is the one wired up by default.

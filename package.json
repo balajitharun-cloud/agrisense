@@ -1,0 +1,19 @@
+{
+  "name": "agrisense",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Vercel deployment root: hosts the serverless API function and builds the frontend.",
+  "scripts": {
+    "build": "npm --prefix frontend run build",
+    "vercel-build": "npm --prefix frontend install && npm --prefix frontend run build"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "undici": "^7.30.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
