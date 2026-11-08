@@ -395,3 +395,30 @@ under `/agrisense/` on GitHub Pages.
   of Agriculture figures for audited numbers.
 - Division boundaries are drawn from district geometry, so they follow
   district outlines rather than the exact revenue-division boundary lines.
+
+---
+
+## 13. Troubleshooting
+
+### `npm start` fails with `ELIFECYCLE ... exit status 1`
+
+npm's message is only the wrapper. **Scroll up in the terminal** to the first
+real error line — that is what identifies the cause.
+
+| Real error above the wrapper | Cause | Fix |
+|---|---|---|
+| `ERR_MODULE_NOT_FOUND: Cannot find package 'dotenv'` (or express/cors) | Dependencies not installed **in that folder** | `cd backend && npm install` |
+| `EADDRINUSE :::8787` | Port already in use (another copy still running) | Stop it, or set `PORT=8788` in `backend/.env` **and** update the proxy target in `frontend/vite.config.js` |
+| `SyntaxError` / `Cannot use import statement` | Node too old | Install Node 18+ (`node -v`) |
+| Nothing obvious | npm hides the stack | Run `node src/server.js` directly |
+
+**Node version.** The backend needs Node 18 or newer; Node 20 LTS is
+recommended. Note that `undici` (used only for outbound proxy support) requires
+Node ≥ 20.18.1, so it is declared as an **optional** dependency and loaded
+lazily: on Node 18 the server still starts and simply skips proxy support
+instead of crashing.
+
+### Live Server shows a blank page or a JSX error
+
+Live Server serves static files only. It cannot compile JSX. Build first and
+serve `frontend/dist` — see section 12 and the Live Server notes.
