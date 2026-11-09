@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Store, Search, Star, Package, BadgeCheck, TrendingUp, TrendingDown } from 'lucide-react';
+import { Store, Search, Star, Package, TrendingUp, TrendingDown, TriangleAlert } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
 import { api } from '../lib/api.js';
 import { useAsync } from '../lib/hooks.js';
@@ -31,6 +31,14 @@ export default function Marketplace() {
         right={<SourceBadge source={data?.source} />}
       />
 
+
+      <Card style={{ marginBottom: 'var(--sp-4)', borderLeft: '3px solid var(--warn)' }}>
+        <div className="row" style={{ gap: 10, alignItems: 'flex-start' }}>
+          <TriangleAlert size={16} style={{ color: 'var(--warn)', marginTop: 2, flex: 'none' }} />
+          <span style={{ fontSize: '0.86rem' }}>{t('market.demoBanner')}</span>
+        </div>
+      </Card>
+
       <Card style={{ marginBottom: 'var(--sp-4)' }}>
         <div className="row wrap between" style={{ gap: 'var(--sp-3)' }}>
           <div className="chip-list">
@@ -56,7 +64,7 @@ export default function Marketplace() {
             <Card key={l.id}>
               <div className="row between" style={{ alignItems: 'flex-start' }}>
                 <Badge tone="accent">{l.category}</Badge>
-                {l.verified && <span className="row" style={{ gap: 4, color: 'var(--ok)', fontSize: '0.74rem', fontWeight: 600 }}><BadgeCheck size={14} /> Verified</span>}
+                <Badge tone="warn">{t('common.sample')}</Badge>
               </div>
               <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.08rem', fontWeight: 600, marginTop: 10, minHeight: 44 }}>{l.title}</div>
               <div className="row between" style={{ marginTop: 8 }}>

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Megaphone, ExternalLink, CalendarDays, Building2, MapPin } from 'lucide-react';
+import { Megaphone, ExternalLink, CalendarDays, Building2, MapPin, TriangleAlert } from 'lucide-react';
 import { useApp } from '../context/AppContext.jsx';
 import { api } from '../lib/api.js';
 import { useAsync } from '../lib/hooks.js';
@@ -27,6 +27,14 @@ export default function Gov() {
         right={<SourceBadge source={data?.source} />}
       />
 
+
+      <Card style={{ marginBottom: 'var(--sp-4)', borderLeft: '3px solid var(--warn)' }}>
+        <div className="row" style={{ gap: 10, alignItems: 'flex-start' }}>
+          <TriangleAlert size={16} style={{ color: 'var(--warn)', marginTop: 2, flex: 'none' }} />
+          <span style={{ fontSize: '0.86rem' }}>{t('gov.demoBanner')}</span>
+        </div>
+      </Card>
+
       <Card style={{ marginBottom: 'var(--sp-4)' }}>
         <div className="chip-list">
           {CATEGORIES.map((c) => (
@@ -49,6 +57,7 @@ export default function Gov() {
                   <div className="row wrap" style={{ gap: 8, marginBottom: 8 }}>
                     <Badge tone={g.urgency === 'high' ? 'alert' : g.category === 'Subsidy' ? 'ok' : 'info'}>{g.category}</Badge>
                     <Badge>{g.level === 'central' ? 'Central' : 'State'}</Badge>
+                    <Badge tone="warn">{t('common.sample')}</Badge>
                     {g.urgency === 'high' && <Badge tone="alert">High priority</Badge>}
                   </div>
                   <h3 style={{ fontSize: 'var(--step-2)' }}>{g.title}</h3>

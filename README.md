@@ -10,6 +10,14 @@ React + Vite  →  frontend/      (UI, i18n, charts, voice)
 Node + Express →  backend/       (API, mock datasets, service layer)
 ```
 
+> **⚠️ Illustrative sample data.** Government notices, marketplace sellers,
+> prices, ratings and mandi rates in this project are **fabricated demo
+> content**, not real advisories, listings or market prices. The UI labels them
+> with a `Sample` badge and a banner on the Gov Updates and Marketplace pages.
+> Wire up `GOV_FEED_URL` / `MARKETPLACE_API_BASE` in `backend/.env` before
+> showing this to real farmers. Sensor, satellite and division-share figures are
+> simulated/modelled and labelled as such.
+
 ---
 
 ## 1. Quick start

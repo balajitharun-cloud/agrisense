@@ -3,6 +3,10 @@
 // Plug-in point: set GOV_FEED_URL in .env to ingest a live RSS/JSON feed
 // (PIB, State Dept. of Agriculture, IMD agro-advisory). Mock feed otherwise.
 // Titles/summaries carry `local` translations where available.
+//
+// NOTE: these are ILLUSTRATIVE SAMPLE notices written for the demo. They are
+// not real government advisories and must not be presented as such - the UI
+// renders a SAMPLE badge and a banner because `demo: true` is set on each one.
 // ---------------------------------------------------------------------------
 
 export const GOV_ANNOUNCEMENTS = [
@@ -13,6 +17,7 @@ export const GOV_ANNOUNCEMENTS = [
     level: 'central',
     region: 'All India',
     category: 'Subsidy',
+    demo: true,
     urgency: 'normal',
     title: 'PM-KISAN 19th instalment released',
     local: { kn: 'ಪಿಎಂ-ಕಿಸಾನ್ 19ನೇ ಕಂತು ಬಿಡುಗಡೆ', hi: 'पीएम-किसान की 19वीं किस्त जारी' },
@@ -26,6 +31,7 @@ export const GOV_ANNOUNCEMENTS = [
     level: 'state',
     region: 'Karnataka',
     category: 'Advisory',
+    demo: true,
     urgency: 'high',
     title: 'Fall Armyworm alert for Kharif maize in North Karnataka',
     local: { kn: 'ಉತ್ತರ ಕರ್ನಾಟಕದ ಮೆಕ್ಕೆಜೋಳಕ್ಕೆ ಸೈನ್ಯ ಹುಳು ಎಚ್ಚರಿಕೆ' },
@@ -39,6 +45,7 @@ export const GOV_ANNOUNCEMENTS = [
     level: 'central',
     region: 'South Interior Karnataka',
     category: 'Weather Advisory',
+    demo: true,
     urgency: 'medium',
     title: 'Above-normal October rainfall likely over South Interior Karnataka',
     local: { kn: 'ದಕ್ಷಿಣ ಒಳನಾಡ ಕರ್ನಾಟಕದಲ್ಲಿ ಅಕ್ಟೋಬರ್ ಮಳೆ ಸಾಮಾನ್ಯಕ್ಕಿಂತ ಹೆಚ್ಚು' },
@@ -52,6 +59,7 @@ export const GOV_ANNOUNCEMENTS = [
     level: 'state',
     region: 'Karnataka',
     category: 'Market',
+    demo: true,
     urgency: 'normal',
     title: 'Onion procurement centres open in Hubballi and Bagalkot',
     local: { kn: 'ಹುಬ್ಬಳ್ಳಿ ಮತ್ತು ಬಾಗಲಕೋಟೆಯಲ್ಲಿ ಈರುಳ್ಳಿ ಖರೀದಿ ಕೇಂದ್ರ' },
@@ -65,6 +73,7 @@ export const GOV_ANNOUNCEMENTS = [
     level: 'central',
     region: 'All India',
     category: 'Regulation',
+    demo: true,
     urgency: 'normal',
     title: 'Revised label claims for 3 neonicotinoid formulations',
     local: { kn: '3 ನಿಯೋನಿಕೋಟಿನಾಯ್ಡ್ ಸೂತ್ರೀಕರಣಗಳ ಪರಿಷ್ಕೃತ ಲೇಬಲ್' },
@@ -78,6 +87,7 @@ export const GOV_ANNOUNCEMENTS = [
     level: 'state',
     region: 'Karnataka',
     category: 'Scheme',
+    demo: true,
     urgency: 'normal',
     title: 'Drip irrigation subsidy window extended to 30 November',
     local: { kn: 'ಹನಿ ನೀರಾವರಿ ಸಬ್ಸಿಡಿ ಅವಧಿ ನವೆಂಬರ್ 30ರವರೆಗೆ ವಿಸ್ತರಣೆ' },
@@ -91,6 +101,7 @@ export const GOV_ANNOUNCEMENTS = [
     level: 'central',
     region: 'Kodagu, Chikkamagaluru, Hassan',
     category: 'Advisory',
+    demo: true,
     urgency: 'medium',
     title: 'Coffee Berry Borer management advisory for post-monsoon',
     local: { kn: 'ಮಳೆಯ ನಂತರ ಕಾಫಿ ಕಾಯಿ ಕೊರೆಯುವ ಹುಳು ನಿರ್ವಹಣೆ ಸಲಹೆ' },
@@ -104,6 +115,7 @@ export const GOV_ANNOUNCEMENTS = [
     level: 'state',
     region: 'Karnataka',
     category: 'Market',
+    demo: true,
     urgency: 'normal',
     title: 'Unified market fee waived for direct farmer sales',
     local: { kn: 'ರೈತರ ನೇರ ಮಾರಾಟಕ್ಕೆ ಏಕೀಕೃತ ಮಾರುಕಟ್ಟೆ ಶುಲ್ಕ ರದ್ದು' },
