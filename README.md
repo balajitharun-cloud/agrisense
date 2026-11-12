@@ -472,3 +472,42 @@ The server prints a clear message if the port is taken, e.g.:
 
 Note that if a `PORT` environment variable is set globally on your machine, the
 server uses that instead of 8787.
+
+---
+
+## 15. Legacy / Windows 7 build (`legacy-win7/`)
+
+Node.js stopped supporting Windows 7 after **14.17.6**, and Vite 5 needs Node 18+
+— so the main project cannot build or run there. This folder solves it
+differently: the UI is **pre-built** and served by a **dependency-free** Node
+script, so there is no `npm install` and no build step on the old machine.
+
+```
+legacy-win7/
+├── server.js      # ~100 lines, only node:http/fs/path/url - zero dependencies
+├── public/        # the pre-built app (generated, git-ignored)
+├── start.bat      # double-click on Windows
+└── README.txt     # plain-text instructions
+```
+
+**Run it:** double-click `start.bat`, or `node server.js` → http://localhost:3000
+
+### What it does and doesn't have
+
+The app runs in its browser-side mode (the same one used for GitHub Pages):
+sensors, weather (live), soil, crop map, crop advisor, plant protection,
+marketplace, gov updates, sharing, 10 languages all work. What's missing is the
+server-side API: accounts are stored in the browser, and voice uses the
+browser's speech engine instead of ElevenLabs.
+
+### Regenerating `public/`
+
+`public/` is a build artefact, so it isn't committed. Rebuild it on any machine
+with Node 18+:
+
+```bash
+cd frontend
+npm install
+VITE_STATIC_API=true npm run build
+rm -rf ../legacy-win7/public && cp -r dist ../legacy-win7/public
+```

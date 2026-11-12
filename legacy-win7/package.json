@@ -1,0 +1,13 @@
+{
+  "name": "agrisense-legacy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Runs the pre-built AgriSense app on old Node (Windows 7 friendly). No dependencies.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=12"
+  }
+}
