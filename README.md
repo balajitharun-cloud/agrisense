@@ -430,3 +430,45 @@ instead of crashing.
 
 Live Server serves static files only. It cannot compile JSX. Build first and
 serve `frontend/dist` — see section 12 and the Live Server notes.
+
+---
+
+## 14. Running in native VS Code (no GitHub needed)
+
+The zip is self-contained. You need only **Node 18+** (20 LTS recommended) and
+desktop VS Code — GitHub is used only for the hosted site and CI.
+
+Open the `agrisense` folder (the one containing `backend/` and `frontend/`).
+This repo ships VS Code tasks so you don't have to type the commands:
+
+**One click:** `Ctrl+Shift+B` (default build task) → **"AgriSense: Run on
+localhost:8787"**. It installs both dependency trees, builds the UI, then starts
+Express. Open http://localhost:8787.
+
+**Or:** `Ctrl+Shift+P` → **Tasks: Run Task** → pick one:
+
+| Task | What it does |
+|---|---|
+| `AgriSense: Run on localhost:8787` | install + build + start (one port, one server) |
+| `AgriSense: Dev mode (hot reload)` | backend on :8787 and Vite on :5173 |
+| `AgriSense: Install dependencies` | just `npm install` in both folders |
+| `AgriSense: Check backend API` | the 30-check endpoint smoke test |
+
+**Debugging:** `F5` → **"Debug AgriSense backend"** (`.vscode/launch.json`
+provides the config; breakpoints work in `backend/src/`).
+
+The tasks use `npm --prefix`, so they work regardless of which folder the
+terminal is in.
+
+### Port already in use
+
+The server prints a clear message if the port is taken, e.g.:
+
+```
+  Port 8787 is already in use.
+  Either stop the other process, or pick another port:
+    - create backend/.env containing  PORT=8788
+```
+
+Note that if a `PORT` environment variable is set globally on your machine, the
+server uses that instead of 8787.

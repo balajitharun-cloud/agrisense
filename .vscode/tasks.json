@@ -1,0 +1,106 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "AgriSense: Run on localhost:8787",
+      "detail": "Install deps, build the UI, then start Express serving API + UI on one port.",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "AgriSense: Install dependencies",
+        "agrisense: build frontend",
+        "agrisense: start server"
+      ],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "AgriSense: Install dependencies",
+      "detail": "npm install in both frontend and backend.",
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "agrisense: install frontend",
+        "agrisense: install backend"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "agrisense: install frontend",
+      "type": "shell",
+      "command": "npm --prefix frontend install",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": false
+      }
+    },
+    {
+      "label": "agrisense: install backend",
+      "type": "shell",
+      "command": "npm --prefix backend install",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": false
+      }
+    },
+    {
+      "label": "agrisense: build frontend",
+      "detail": "Creates frontend/dist, which Express serves. Required before starting the server.",
+      "type": "shell",
+      "command": "npm --prefix frontend run build",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared",
+        "clear": false
+      }
+    },
+    {
+      "label": "agrisense: start server",
+      "detail": "Express on http://localhost:8787 (API at /api, UI at /).",
+      "type": "shell",
+      "command": "npm --prefix backend start",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "AgriSense: Dev mode (hot reload)",
+      "detail": "Backend on :8787 and Vite on :5173. Open http://localhost:5173",
+      "dependsOrder": "parallel",
+      "dependsOn": [
+        "agrisense: start server",
+        "agrisense: dev frontend"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "agrisense: dev frontend",
+      "type": "shell",
+      "command": "npm --prefix frontend run dev",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
+    },
+    {
+      "label": "AgriSense: Check backend API",
+      "detail": "Runs the 30-check endpoint smoke test.",
+      "type": "shell",
+      "command": "npm --prefix backend run smoke",
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      }
+    }
+  ]
+}
